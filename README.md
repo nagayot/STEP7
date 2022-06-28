@@ -81,15 +81,13 @@
  --------------------------------
 
  ・Bladeファイル内のコメントアウトについて  
- https://cly7796.net/blog/php/
-
- describing-the-comment-to-laravel-out-blade/
+ https://buralog.jp/laravel-blade-template-file-comments/
 
  ・@forelseディレクティブについて  
  https://qiita.com/Masahiro111/items/008a6db75e98ea17f398
 
  ・BEM記法  
-  https://qiita.com/takahirocook/items/01fd723b934e3b38cbbc
+ https://qiita.com/takahirocook/items/01fd723b934e3b38cbbc
 
  --------------------------------
 
@@ -102,7 +100,7 @@
  https://readouble.com/laravel/6.x/ja/routing.html
 
  ・Laravelルーティングまとめ！  
-  https://codelikes.com/laravel-routing-summary/
+ https://codelikes.com/laravel-routing-summary/
 
 
  --------------------------------
