@@ -51,7 +51,7 @@
 
  --------------------------------
  
- ・Model活用法
+ ・Model活用法  
  https://zenn.dev/maotouying/articles/9627078958be65
 
  https://laraweb.net/practice/4865/
