@@ -56,6 +56,9 @@
 
  https://laraweb.net/practice/4865/
 
+ ・仮引数と実引数　値渡しについて  
+ https://www.sejuku.net/blog/23615
+
 
  --------------------------------
 
@@ -64,6 +67,7 @@
  ◎ Controller関連
 
  --------------------------------
+
  ・コンストラクタについて  
  https://laraweb.net/surrounding/1472/
 
@@ -72,6 +76,9 @@
 
  ・$requestについて  
  https://prograshi.com/framework/laravel/request-method-injection/
+
+ ・クエリビルダとEloquentの違いに関して
+ https://biz.addisteria.com/query_builder/
 
  --------------------------------
 

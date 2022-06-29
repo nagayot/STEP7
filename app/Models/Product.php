@@ -81,7 +81,9 @@ class Product extends Model
      * search_product_by_keywordの引数に$keywordを渡しました。
      * 
      * なんと、名前を変えても引数の位置(第一引数や第二引数のこと)が同じものが使えます！
-     * ProductController側では$keywordだったものを、こちらでは$paramとして使っています。
+     * ProductController側で関数を呼び出す際は$keyword(実引数)だったものを、定義側では$param(仮引数)として使っています。
+     * 
+     * これを値渡しと言います(READMEに記事のっけておきます！)
      * 
      * 
      * @param  $param
@@ -117,7 +119,9 @@ class Product extends Model
      * search_product_by_company_nameの引数に$selected_nameを渡しました。
      * 
      * なんと、名前を変えても引数の位置(第一引数や第二引数のこと)が同じものが使えます！
-     * ProductController側では$selected_nameだったものを、こちらでは$paramとして使っています。
+     * ProductController側で関数を呼び出す際は$selected_name(実引数)だったものを、定義側では$param(仮引数)として使っています。
+     * 
+     * これを値渡しと言います(READMEに記事のっけておきます！)
      * 
      * @param $param
      * @return $products
@@ -191,7 +195,9 @@ class Product extends Model
      * create_productの引数に$insert_dataを渡しました。
      * 
      * なんと、名前を変えても引数の位置(第一引数や第二引数のこと)が同じものが使えます！
-     * ProductController側では$insert_dataだったものを、こちらでは$paramとして使っています。
+     * ProductController側で関数を呼び出す際は$insert_data(実引数)だったものを、定義側では$param(仮引数)として使っています。
+     * 
+     * これを値渡しと言います(READMEに記事のっけておきます！)
      * 
      * @param $param
      */
@@ -214,7 +220,9 @@ class Product extends Model
      * update_productの引数に$update_dataを渡しました。
      * 
      * なんと、名前を変えても引数の位置(第一引数や第二引数のこと)が同じものが使えます！
-     * ProductController側では$update_dataだったものを、こちらでは$paramとして使っています。
+     * ProductController側で関数を呼び出す際は$update_data(実引数)だったものを、定義側では$param(仮引数)として使っています。
+     * 
+     * これを値渡しと言います(READMEに記事のっけておきます！)
      * 
      * @param $param
      */

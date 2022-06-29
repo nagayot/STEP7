@@ -94,8 +94,8 @@ class ProductController extends Controller
                 // 中身： Product.phpのsearchProductByCompanyNameにアクセス
                 $product_list = $product_instance->searchProductByCompanyName($selected_name);
             }
-        }
-        catch (\Throwable $e) {
+
+        } catch (\Throwable $e) {
             // 何らかのエラーが起きた際は、こちらの処理を実行
 
             // エラーメッセージだけだと、ユーザーが困ってしまうので本来は、エラーページを返します
@@ -163,8 +163,8 @@ class ProductController extends Controller
                 // 一覧画面へリダイレクトさせる
                 return redirect(route('product.lineup'));
             }
-        }
-        catch (\Throwable $e) {
+
+        } catch (\Throwable $e) {
             // 何らかのエラーが起きた際は、こちらの処理を実行
 
             // 現場では、自作のエラーページを返します
@@ -203,8 +203,8 @@ class ProductController extends Controller
             // 箱  ： $selectItemsという名前の変数(function同様に、中身が分かるものがよい)
             // 中身： Company.phpのcompanyInfoにアクセス
             $selectItems = $company_instance->companyInfo();
-        } 
-        catch (\Throwable $e) {
+
+        } catch (\Throwable $e) {
             // 何らかのエラーが起きた際は、こちらの処理を実行
 
             // 現場では、自作のエラーページを返します
@@ -286,8 +286,8 @@ class ProductController extends Controller
 
             // DBへの変更内容を確定します
             \DB::commit();
-        }
-        catch (\Throwable $e) {
+
+        } catch (\Throwable $e) {
             // 何らかのエラーが起きた際は、こちらの処理を実行
 
             // DBへの変更内容を無かったことにします
@@ -363,8 +363,8 @@ class ProductController extends Controller
                 // route()の中身を変えることで、遷移先を指定できます。
                 return redirect(route('product.lineup'));
             }
-        }
-        catch (\Throwable $e) {
+
+        } catch (\Throwable $e) {
             // 何らかのエラーが起きた際は、こちらの処理を実行
             // 現場では、自作のエラーページを返したりします
             // 今回はページ作るの面倒だったので、エラーメッセージを返します
@@ -445,8 +445,8 @@ class ProductController extends Controller
 
             // DBへの変更内容を確定します
             \DB::commit();
-        }
-        catch (\Throwable $e) {
+
+        } catch (\Throwable $e) {
             // 何らかのエラーが起きた際は、こちらの処理を実行
             // DBへの変更内容を無かったことにします
             \DB::rollback();
@@ -510,8 +510,8 @@ class ProductController extends Controller
             // Product.phpのdeleteProductにアクセス
             // 選択したidの商品を削除したいので、引数に$id(ルートパラメータ)を渡します。
             $product_instance->deleteProduct($id);
-        }
-        catch (\Throwable $e) {
+
+        } catch (\Throwable $e) {
             // 何らかのエラーが起きた際は、こちらの処理を実行
             // 現場では、自作のエラーページを返したりします
             // 今回はページ作るの面倒だったので、エラーメッセージを返します
