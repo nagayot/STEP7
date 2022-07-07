@@ -77,7 +77,7 @@
  ・$requestについて  
  https://prograshi.com/framework/laravel/request-method-injection/
 
- ・クエリビルダとEloquentの違いに関して
+ ・クエリビルダとEloquentの違いに関して  
  https://biz.addisteria.com/query_builder/
 
  --------------------------------
