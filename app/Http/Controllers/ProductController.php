@@ -259,11 +259,11 @@ class ProductController extends Controller
 
             // 箱  : $image_nameという名前の変数(function同様に、中身が分かるものがよい)
             // 中身: storeAs()で画像を保存します。
-            $image_name = $image->storeAs('', $image_path, 'public');
+            $image->storeAs('', $image_path, 'public');
         }
 
         // 箱  : $insert_dataという名前の変数(function同様に、中身が分かるものがよい)
-        // 中身: configフォルダのmessageファイル内にある、message2を取得
+        // 中身: 空の配列
         // 結果取得用で空の配列を作っておき、欲しいデータを突込んでいきます。
         $insert_data = [];
         $insert_data['company_id'] = $request->input('company_id');
@@ -330,8 +330,8 @@ class ProductController extends Controller
     public function showEdit($id) {
 
         // 箱  : $msgという名前の変数(function同様に、中身が分かるものがよい)
-        // 中身: configフォルダのmessageファイル内にある、message3を取得
-        $msg = config('message.message3');
+        // 中身: configフォルダのmessageファイル内にある、message1を取得
+        $msg = config('message.message1');
 
         // 箱  : $product_instanceという名前の変数(function同様に、中身が分かるものがよい)
         // 中身: Models/Product.phpのProductクラスのインスタンス
@@ -396,8 +396,8 @@ class ProductController extends Controller
      */
     public function exeUpdate(ProductRequest $request) {
         // 箱  : $msgという名前の変数(function同様に、中身が分かるものがよい)
-        // 中身: configフォルダのmessageファイル内にある、message4を取得
-        $msg = config('message.message4');
+        // 中身: configフォルダのmessageファイル内にある、message3を取得
+        $msg = config('message.message3');
 
         // 箱  : $product_instanceという名前の変数(function同様に、中身が分かるものがよい)
         // 中身: Models/Product.phpのProductクラスのインスタンス
@@ -421,7 +421,7 @@ class ProductController extends Controller
         }
 
         // 箱  : $insert_dataという名前の変数(function同様に、中身が分かるものがよい)
-        // 中身: configフォルダのmessageファイル内にある、message2を取得
+        // 中身: 空の配列
         // 結果取得用で空の配列を作っておき、欲しいデータを突込んでいきます。
         $update_data = [];
         $update_data['id'] = $request->input('id');
@@ -483,12 +483,12 @@ class ProductController extends Controller
      */
     public function exeDelete($id) {
         // 箱  : $msgという名前の変数(function同様に、中身が分かるものがよい)
-        // 中身: configフォルダのmessageファイル内にある、message3を取得
-        $msg_1 = config('message.message3');
+        // 中身: configフォルダのmessageファイル内にある、message1を取得
+        $msg_1 = config('message.message1');
 
         // 箱  : $msgという名前の変数(function同様に、中身が分かるものがよい)
-        // 中身: configフォルダのmessageファイル内にある、message5を取得
-        $msg_2 = config('message.message5');
+        // 中身: configフォルダのmessageファイル内にある、message4を取得
+        $msg_2 = config('message.message4');
 
         // 箱  : $product_instanceという名前の変数(function同様に、中身が分かるものがよい)
         // 中身: Models/Product.phpのProductクラスのインスタンス
