@@ -52,13 +52,13 @@
  --------------------------------
  
  ・Model活用法  
- https://zenn.dev/maotouying/articles/9627078958be65
-
  https://laraweb.net/practice/4865/
 
  ・仮引数と実引数　値渡しについて  
  https://www.sejuku.net/blog/23615
 
+ ・ファットコントローラー回避術  
+ https://www.kamome-susume.com/laravel-fatcontroler/
 
  --------------------------------
 
@@ -76,6 +76,7 @@
 
  ・$requestについて  
  https://prograshi.com/framework/laravel/request-method-injection/
+ https://nebikatsu.com/6784.html/
 
  ・クエリビルダとEloquentの違いに関して  
  https://biz.addisteria.com/query_builder/
@@ -96,6 +97,9 @@
  ・BEM記法  
  https://qiita.com/takahirocook/items/01fd723b934e3b38cbbc
 
+ ・old関数について  
+ https://www.kamome-susume.com/laravel-old/
+
  --------------------------------
 
 
@@ -108,7 +112,6 @@
 
  ・Laravelルーティングまとめ！  
  https://codelikes.com/laravel-routing-summary/
-
 
  --------------------------------
 
