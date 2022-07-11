@@ -21,15 +21,19 @@ class ProductController extends Controller
     /**
      * コンストラクタです。
      * 
-     * 何者？と思ったらググりましょう
      * コンストラクタ内に書いた処理が、他の関数(このController内でいうと、showLineupやshowDetail等)の処理を行う前に、実行されます。
-     * 全ての関数内で欲しい処理を書いてあげると良いかも？(今回はとりあえずユーザー認証のみ)
      * 実は、ユーザー認証周りの機能をコマンドで作成した時に自動生成される、/app/Controllers/Authの中のControllerでも使われてました
+     * READMEに参考記事のせてあります！
      * 
      */
     public function __construct() {
-        // ログインしていることを前提としてくれます
+        // ログインしていることを前提としてくれます(app/Http/Middleware/Authenticate.phpを利用する宣言です)
+        // 'auth'という名前はapp/Http/Kernel.phpの$routeMiddlewareで決めています
         $this->middleware('auth');
+
+        // newすることで、モデルクラスのインスタンスが使用可能になります
+        $this->product = new Product();
+        $this->company = new Company();
     }
 
     /**
@@ -44,9 +48,7 @@ class ProductController extends Controller
      * 自分で見返すときはもちろん、いつか来る改修案件の時、すごく助かります。
      * 
      * @paramには引数を書きます。
-     * 第一引数はProductRequest
-     * 第二引数は$requestとなっています。
-     * ProductRequestの$requestとかではないです。別物です。
+     * Requestクラス(useしていますね！)で受け取ったデータを%requestとして使います
      * 
      * @returnには返り値を書きます
      * 
@@ -54,16 +56,6 @@ class ProductController extends Controller
      * @return view
      */
     public function showLineup(Request $request) {
-        // 箱  : $product_instanceという名前の変数(function同様に、中身が分かるものがよい)
-        // 中身: Models/Product.phpのProductクラスのインスタンス
-        // newするとクラスのインスタンスが使えます。
-        $product_instance = new Product;
-
-        // 箱  : $company_instanceという名前の変数(function同様に、中身が分かるものがよい)
-        // 中身: Models/Company.phpのCompanyクラスのインスタンス
-        // newするとクラスのインスタンスが使えます。
-        $company_instance = new Company;
-
         // 箱  ： $keywordという名前の変数(function同様に、中身が分かるものがよい)
         // 中身： 検索窓(lineup.blade.phpのnameがkeywordのinputタグ)に入力された文字を取得します
         $keyword = $request->input('keyword');
@@ -76,23 +68,24 @@ class ProductController extends Controller
         try {
             // 箱  ： $productListという名前の変数(function同様に、中身が分かるものがよい)
             // 中身： Product.phpのproduct_infoにアクセス
-            $product_list = $product_instance->productList();
+            $product_list = $this->product->productList();
 
             // 箱  ： $company_dataという名前の変数(function同様に、中身が分かるものがよい)
             // 中身： Company.phpのcompanyInfoにアクセス
-            $company_data = $company_instance->companyInfo();
+            $company_data = $this->company->companyInfo();
+
             // キーワード検索された場合
             if (!empty($keyword)) {
                 // 箱  ： $product_listという名前の変数(function同様に、中身が分かるものがよい)
                 // 中身： Product.phpのsearchProductByKeywordにアクセス
-                $product_list = $product_instance->searchProductByKeyword($keyword);
+                $product_list = $this->product->searchProductByKeyword($keyword);
             }
 
             // プルダウンメニューでの検索が行われた場合
             if (!empty($selected_name)) {
                 // 箱  ： $product_listという名前の変数(function同様に、中身が分かるものがよい)
                 // 中身： Product.phpのsearchProductByCompanyNameにアクセス
-                $product_list = $product_instance->searchProductByCompanyName($selected_name);
+                $product_list = $this->product->searchProductByCompanyName($selected_name);
             }
 
         } catch (\Throwable $e) {
@@ -143,17 +136,12 @@ class ProductController extends Controller
         // 中身: configフォルダのmessageファイル内にある、message1を取得
         $msg = config('message.message1');
 
-        // 箱  : $product_instanceという名前の変数(function同様に、中身が分かるものがよい)
-        // 中身: Models/Product.phpのProductクラスのインスタンス
-        // newするとクラスのインスタンスが使えます。
-        $product_instance = new Product;
-
         // try catchを入れることで、正常な処理の時はtryを。エラーがあった際のみcatchに書いた内容が実行されます
         try {
             // 箱  ： $product_listという名前の変数(function同様に、中身が分かるものがよい)
             // 中身： Product.phpのproductDetailにアクセス
             // 選択した商品のidを持つ情報のみ表示したいので、引数に$id(ルートパラメータ)を渡します
-            $product = $product_instance->productDetail($id);
+            $product = $this->product->productDetail($id);
 
             // もし、該当商品がない場合
             if (is_null($product)) {
@@ -193,16 +181,11 @@ class ProductController extends Controller
      * @return view
      */
     public function showCreate() {
-        // 箱  : $company_instanceという名前の変数(function同様に、中身が分かるものがよい)
-        // 中身: Models/Company.phpのCompanyクラスのインスタンス
-        // newするとクラスのインスタンスが使えます。
-        $company_instance = new Company;
-
         // try catchを入れることで、正常な処理の時はtryを。エラーがあった際のみcatchに書いた内容が実行されます
         try {
             // 箱  ： $selectItemsという名前の変数(function同様に、中身が分かるものがよい)
             // 中身： Company.phpのcompanyInfoにアクセス
-            $selectItems = $company_instance->companyInfo();
+            $selectItems = $this->company->companyInfo();
 
         } catch (\Throwable $e) {
             // 何らかのエラーが起きた際は、こちらの処理を実行
@@ -229,19 +212,11 @@ class ProductController extends Controller
      * 自分で見返すときはもちろん、いつか来る改修案件の時、すごく助かります。
      * 
      * @paramには引数を書きます。
-     * 第一引数はProductRequest
-     * 第二引数は$requestとなっています。
-     * ProductRequestの$requestとかではないです。別物です。
+     * ProductRequestクラス(useしていますね！)で受け取ったデータを%requestとして使います
      *
      * @param ProductRequest $request
      */
     public function exeStore(ProductRequest $request) {
-
-        // 箱  : $product_instanceという名前の変数(function同様に、中身が分かるものがよい)
-        // 中身: Models/Product.phpのProductクラスのインスタンス
-        // newするとクラスのインスタンスが使えます。
-        $product_instance = new Product;
-
         // 箱  : $msgという名前の変数(function同様に、中身が分かるものがよい)
         // 中身: configフォルダのmessageファイル内にある、message2を取得
         $msg = config('message.message2');
@@ -282,7 +257,7 @@ class ProductController extends Controller
         try {
             // Product.phpのcreateProductにアクセス
             // 欲しいデータを揃えた$insert_dataを使いたいので、引数として渡します。
-            $product_instance->createProduct($insert_data);
+            $this->product->createProduct($insert_data);
 
             // DBへの変更内容を確定します
             \DB::commit();
@@ -333,26 +308,16 @@ class ProductController extends Controller
         // 中身: configフォルダのmessageファイル内にある、message1を取得
         $msg = config('message.message1');
 
-        // 箱  : $product_instanceという名前の変数(function同様に、中身が分かるものがよい)
-        // 中身: Models/Product.phpのProductクラスのインスタンス
-        // newするとクラスのインスタンスが使えます。
-        $product_instance = new Product;
-
-        // 箱  : $company_instanceという名前の変数(function同様に、中身が分かるものがよい)
-        // 中身: Models/Company.phpのCompanyクラスのインスタンス
-        // newするとクラスのインスタンスが使えます。
-        $company_instance = new Company;
-
         // try catchを入れることで、正常な処理の時はtryを。エラーがあった際のみcatchに書いた内容が実行されます
         try {
             // 箱  ： $product_listという名前の変数(function同様に、中身が分かるものがよい)
             // 中身： Product.phpのproductDetailにアクセス
             // 選択した商品のidを持つ情報のみ表示したいので、引数に$id(ルートパラメータ)を渡します
-            $product = $product_instance->productDetail($id);
+            $product = $this->product->productDetail($id);
             
             // 箱  ： $company_dataという名前の変数(function同様に、中身が分かるものがよい)
             // 中身： Company.phpのcompanyInfoにアクセス
-            $company_list = $company_instance->companyInfo();
+            $company_list = $this->company->companyInfo();
 
             // 該当idを持つ商品が見つからなかった場合
             if (is_null($product)) {
@@ -388,9 +353,7 @@ class ProductController extends Controller
      * 自分で見返すときはもちろん、いつか来る改修案件の時、すごく助かります。
      * 
      * @paramには引数を書きます。
-     * 第一引数はProductRequest
-     * 第二引数は$requestとなっています。
-     * ProductRequestの$requestとかではないです。別物です。
+     * Requestクラス(useしていますね！)で受け取ったデータを%requestとして使います
      * 
      * @param ProductRequest $request
      */
@@ -398,11 +361,6 @@ class ProductController extends Controller
         // 箱  : $msgという名前の変数(function同様に、中身が分かるものがよい)
         // 中身: configフォルダのmessageファイル内にある、message3を取得
         $msg = config('message.message3');
-
-        // 箱  : $product_instanceという名前の変数(function同様に、中身が分かるものがよい)
-        // 中身: Models/Product.phpのProductクラスのインスタンス
-        // newするとクラスのインスタンスが使えます。
-        $product_instance = new Product;
 
         // 箱  : $image_nameという名前の変数(function同様に、中身が分かるものがよい)
         // 中身: $request内のimageをfileメソッドで取得
@@ -441,7 +399,7 @@ class ProductController extends Controller
         try {
             // Product.phpのcreateProductにアクセス
             // 欲しいデータを揃えた$update_dataを使いたいので、引数として渡します。
-            $product_instance->updateProduct($update_data);
+            $this->product->updateProduct($update_data);
 
             // DBへの変更内容を確定します
             \DB::commit();
@@ -490,11 +448,6 @@ class ProductController extends Controller
         // 中身: configフォルダのmessageファイル内にある、message4を取得
         $msg_2 = config('message.message4');
 
-        // 箱  : $product_instanceという名前の変数(function同様に、中身が分かるものがよい)
-        // 中身: Models/Product.phpのProductクラスのインスタンス
-        // newするとクラスのインスタンスが使えます。
-        $product_instance = new Product;
-
         // 削除対象の商品idがない場合
         if (empty($id)) {
             // '該当する商品がありません'というエラーメッセージを表示
@@ -509,7 +462,7 @@ class ProductController extends Controller
         try {
             // Product.phpのdeleteProductにアクセス
             // 選択したidの商品を削除したいので、引数に$id(ルートパラメータ)を渡します。
-            $product_instance->deleteProduct($id);
+            $this->product->deleteProduct($id);
 
         } catch (\Throwable $e) {
             // 何らかのエラーが起きた際は、こちらの処理を実行
