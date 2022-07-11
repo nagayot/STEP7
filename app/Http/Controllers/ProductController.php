@@ -48,9 +48,7 @@ class ProductController extends Controller
      * 自分で見返すときはもちろん、いつか来る改修案件の時、すごく助かります。
      * 
      * @paramには引数を書きます。
-     * 第一引数はProductRequest
-     * 第二引数は$requestとなっています。
-     * ProductRequestの$requestとかではないです。別物です。
+     * Requestクラス(useしていますね！)で受け取ったデータを%requestとして使います
      * 
      * @returnには返り値を書きます
      * 
@@ -211,9 +209,7 @@ class ProductController extends Controller
      * 自分で見返すときはもちろん、いつか来る改修案件の時、すごく助かります。
      * 
      * @paramには引数を書きます。
-     * 第一引数はProductRequest
-     * 第二引数は$requestとなっています。
-     * ProductRequestの$requestとかではないです。別物です。
+     * ProductRequestクラス(useしていますね！)で受け取ったデータを%requestとして使います
      *
      * @param ProductRequest $request
      */
@@ -347,9 +343,7 @@ class ProductController extends Controller
      * 自分で見返すときはもちろん、いつか来る改修案件の時、すごく助かります。
      * 
      * @paramには引数を書きます。
-     * 第一引数はProductRequest
-     * 第二引数は$requestとなっています。
-     * ProductRequestの$requestとかではないです。別物です。
+     * ProductRequestクラス(useしていますね！)で受け取ったデータを%requestとして使います
      * 
      * @param ProductRequest $request
      */
