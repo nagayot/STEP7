@@ -230,7 +230,7 @@ class Product extends Model
         // productsテーブルの
         DB::table('products')
 
-            // productsテーブルのidと、$idの持つidの値が一致するものを探して、
+            // productsテーブルのidと、$paramの持つidの値が一致するものを探して、
             ->where('id', $param['id'])
 
             // それぞれのカラムの内容(=>の左)を引数(=>の右)の値で更新します
