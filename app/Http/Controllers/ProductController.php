@@ -30,7 +30,7 @@ class ProductController extends Controller
         // ログインしていることを前提としてくれます(app/Http/Middleware/Authenticate.phpを利用する宣言です)
         // 'auth'という名前はapp/Http/Kernel.phpの$routeMiddlewareで決めています
         $this->middleware('auth');
-
+        
         // newすることで、モデルクラスのインスタンスが使用可能になります
         $this->product = new Product();
         $this->company = new Company();
@@ -48,7 +48,9 @@ class ProductController extends Controller
      * 自分で見返すときはもちろん、いつか来る改修案件の時、すごく助かります。
      * 
      * @paramには引数を書きます。
-     * Requestクラス(useしていますね！)で受け取ったデータを%requestとして使います
+     * 第一引数はProductRequest
+     * 第二引数は$requestとなっています。
+     * ProductRequestの$requestとかではないです。別物です。
      * 
      * @returnには返り値を書きます
      * 
@@ -132,10 +134,6 @@ class ProductController extends Controller
      * @return view
      */
     public function showDetail($id) {
-        // 箱  : $msgという名前の変数(function同様に、中身が分かるものがよい)
-        // 中身: configフォルダのmessageファイル内にある、message1を取得
-        $msg = config('message.message1');
-
         // try catchを入れることで、正常な処理の時はtryを。エラーがあった際のみcatchに書いた内容が実行されます
         try {
             // 箱  ： $product_listという名前の変数(function同様に、中身が分かるものがよい)
@@ -145,8 +143,9 @@ class ProductController extends Controller
 
             // もし、該当商品がない場合
             if (is_null($product)) {
+                // configフォルダのmessageファイル内にある、message1を取得
                 // '該当商品がありません'というエラーメッセージを表示
-                \Session::flash('err_msg', $msg);
+                \Session::flash('err_msg', config('message.message1'));
 
                 // 一覧画面へリダイレクトさせる
                 return redirect(route('product.lineup'));
@@ -212,15 +211,13 @@ class ProductController extends Controller
      * 自分で見返すときはもちろん、いつか来る改修案件の時、すごく助かります。
      * 
      * @paramには引数を書きます。
-     * ProductRequestクラス(useしていますね！)で受け取ったデータを%requestとして使います
+     * 第一引数はProductRequest
+     * 第二引数は$requestとなっています。
+     * ProductRequestの$requestとかではないです。別物です。
      *
      * @param ProductRequest $request
      */
     public function exeStore(ProductRequest $request) {
-        // 箱  : $msgという名前の変数(function同様に、中身が分かるものがよい)
-        // 中身: configフォルダのmessageファイル内にある、message2を取得
-        $msg = config('message.message2');
-
         // 箱  : $image_nameという名前の変数(function同様に、中身が分かるものがよい)
         // 中身: $request内のimageをfileメソッドで取得
         // 画像関係の実装をする際は、シンボリックリンクを貼ることをお忘れなく!
@@ -273,8 +270,9 @@ class ProductController extends Controller
             throw new \Exception($e->getMessage());
         }
 
+        // configフォルダのmessageファイル内にある、message2を取得
         // '商品を登録しました！'というメッセージを表示
-        \Session::flash('err_msg', $msg);
+        \Session::flash('err_msg', config('message.message2'));
 
         // '/resources/views/product/lineup.blade.php'にリダイレクトします。
         // route()の中身を変えることで、遷移先を指定できます。
@@ -303,11 +301,6 @@ class ProductController extends Controller
      * @return view
      */
     public function showEdit($id) {
-
-        // 箱  : $msgという名前の変数(function同様に、中身が分かるものがよい)
-        // 中身: configフォルダのmessageファイル内にある、message1を取得
-        $msg = config('message.message1');
-
         // try catchを入れることで、正常な処理の時はtryを。エラーがあった際のみcatchに書いた内容が実行されます
         try {
             // 箱  ： $product_listという名前の変数(function同様に、中身が分かるものがよい)
@@ -321,8 +314,9 @@ class ProductController extends Controller
 
             // 該当idを持つ商品が見つからなかった場合
             if (is_null($product)) {
+                // configフォルダのmessageファイル内にある、message1を取得
                 // '該当する商品がありません'というエラーメッセージを表示
-                \Session::flash('err_msg', $msg);
+                \Session::flash('err_msg', config('message.message1'));
 
                 // '/resources/views/product/lineup.blade.php'にリダイレクトします。
                 // route()の中身を変えることで、遷移先を指定できます。
@@ -353,15 +347,13 @@ class ProductController extends Controller
      * 自分で見返すときはもちろん、いつか来る改修案件の時、すごく助かります。
      * 
      * @paramには引数を書きます。
-     * Requestクラス(useしていますね！)で受け取ったデータを%requestとして使います
+     * 第一引数はProductRequest
+     * 第二引数は$requestとなっています。
+     * ProductRequestの$requestとかではないです。別物です。
      * 
      * @param ProductRequest $request
      */
     public function exeUpdate(ProductRequest $request) {
-        // 箱  : $msgという名前の変数(function同様に、中身が分かるものがよい)
-        // 中身: configフォルダのmessageファイル内にある、message3を取得
-        $msg = config('message.message3');
-
         // 箱  : $image_nameという名前の変数(function同様に、中身が分かるものがよい)
         // 中身: $request内のimageをfileメソッドで取得
         // 画像関係の実装をする際は、シンボリックリンクを貼ることをお忘れなく!
@@ -375,7 +367,7 @@ class ProductController extends Controller
 
             // 箱  : $image_nameという名前の変数(function同様に、中身が分かるものがよい)
             // 中身: storeAs()で画像を保存します。
-            $image_name = $image->storeAs('', $image_path, 'public');
+            $image->storeAs('', $image_path, 'public');
         }
 
         // 箱  : $insert_dataという名前の変数(function同様に、中身が分かるものがよい)
@@ -413,8 +405,9 @@ class ProductController extends Controller
             // 今回はページ作るの面倒だったので、エラーメッセージを返します
             throw new \Exception($e->getMessage());
         }
+        // configフォルダのmessageファイル内にある、message3を取得
         // '商品情報を更新しました！'というメッセージを表示
-        \Session::flash('err_msg', $msg);
+        \Session::flash('err_msg', config('message.message3'));
 
         // '/resources/views/product/lineup.blade.php'にリダイレクトします。
         // route()の中身を変えることで、遷移先を指定できます。
@@ -440,18 +433,11 @@ class ProductController extends Controller
      * @param $id
      */
     public function exeDelete($id) {
-        // 箱  : $msgという名前の変数(function同様に、中身が分かるものがよい)
-        // 中身: configフォルダのmessageファイル内にある、message1を取得
-        $msg_1 = config('message.message1');
-
-        // 箱  : $msgという名前の変数(function同様に、中身が分かるものがよい)
-        // 中身: configフォルダのmessageファイル内にある、message4を取得
-        $msg_2 = config('message.message4');
-
         // 削除対象の商品idがない場合
         if (empty($id)) {
+            // configフォルダのmessageファイル内にある、message1を取得
             // '該当する商品がありません'というエラーメッセージを表示
-            \Session::flash('err_msg', $msg_1);
+            \Session::flash('err_msg', config('message.message1'));
 
             // '/resources/views/product/lineup.blade.php'にリダイレクトします。
             // route()の中身を変えることで、遷移先を指定できます。
@@ -471,8 +457,9 @@ class ProductController extends Controller
             throw new \Exception($e->getMessage());
         }
 
-         // '商品を削除しました'というメッセージを表示
-        \Session::flash('err_msg', $msg_2);
+        // configフォルダのmessageファイル内にある、message4を取得
+        // '商品を削除しました'というメッセージを表示
+        \Session::flash('err_msg', config('message.message4'));
 
         // '/resources/views/product/lineup.blade.php'にリダイレクトします。
         // route()の中身を変えることで、遷移先を指定できます。
