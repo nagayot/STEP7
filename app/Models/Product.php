@@ -97,29 +97,29 @@ class Product extends Model
         // 中身 : クエリビルダでproductsテーブル内のデータを取得します
         $products = DB::table('products')
 
-        // productsテーブルのcompany_idとcompaniesテーブルのidで、joinを使ってリレーションを組みます
-        ->join('companies', 'products.company_id', '=', 'companies.id')
+            // productsテーブルのcompany_idとcompaniesテーブルのidで、joinを使ってリレーションを組みます
+            ->join('companies', 'products.company_id', '=', 'companies.id')
 
-        // select文で欲しい情報を選択します
-        ->select(
-            'products.id',
-            'products.image',
-            'products.product_name',
-            'products.price',
-            'products.stock',
-            'products.comment',
-            'companies.company_name',
-        )
+            // select文で欲しい情報を選択します
+            ->select(
+                'products.id',
+                'products.image',
+                'products.product_name',
+                'products.price',
+                'products.stock',
+                'products.comment',
+                'companies.company_name',
+            )
 
-        // product_nameと検索欄に入力された文字が部分的に一致しているものを、productsテーブルから取得します
-        ->where('products.product_name', 'LIKE', '%'.$param.'%')
+            // product_nameと検索欄に入力された文字が部分的に一致しているものを、productsテーブルから取得します
+            ->where('products.product_name', 'LIKE', '%'.$param.'%')
 
-        // orderByを使って、productテーブルの'id'カラムの昇順で並び替えます
-        ->orderBy('products.id', 'asc')
+            // orderByを使って、productテーブルの'id'カラムの昇順で並び替えます
+            ->orderBy('products.id', 'asc')
 
-        // １ページ最大5件になるようにページネーション機能を使います
-        // '/resources/views/product/lineup.blade.php'にもページネーションに関する記述をお忘れなく！
-        ->paginate(5);
+            // １ページ最大5件になるようにページネーション機能を使います
+            // '/resources/views/product/lineup.blade.php'にもページネーションに関する記述をお忘れなく！
+            ->paginate(5);
 
         // オブジェクトとして扱えるようにします
         return $products;
@@ -146,29 +146,29 @@ class Product extends Model
         // 中身 : クエリビルダでcompaniesテーブル内のデータを取得します
         $products = DB::table('products')
 
-        // companiesテーブルのidとproductsテーブルのcompany_idで、joinを使ってリレーションを組みます
-        ->join('companies', 'products.company_id', '=', 'companies.id')
+            // companiesテーブルのidとproductsテーブルのcompany_idで、joinを使ってリレーションを組みます
+            ->join('companies', 'products.company_id', '=', 'companies.id')
 
-        // select文で欲しい情報を選択します
-        ->select(
-            'products.id',
-            'products.image',
-            'products.product_name',
-            'products.price',
-            'products.stock',
-            'products.comment',
-            'companies.company_name',
-        )
+            // select文で欲しい情報を選択します
+            ->select(
+                'products.id',
+                'products.image',
+                'products.product_name',
+                'products.price',
+                'products.stock',
+                'products.comment',
+                'companies.company_name',
+            )
 
-        // 選択されたメーカ名に紐づくcompany_idと一致しているものを、productsテーブルから取得します
-        ->where('products.company_id', $param)
+            // 選択されたメーカ名に紐づくcompany_idと一致しているものを、productsテーブルから取得します
+            ->where('products.company_id', $param)
 
-        // orderByを使って、productテーブルの'id'カラムの昇順で並び替えます
-        ->orderBy('products.id', 'asc')
+            // orderByを使って、productテーブルの'id'カラムの昇順で並び替えます
+            ->orderBy('products.id', 'asc')
 
-        // １ページ最大5件になるようにページネーション機能を使います
-        // '/resources/views/product/lineup.blade.php'にもページネーションに関する記述をお忘れなく！
-        ->paginate(5);
+            // １ページ最大5件になるようにページネーション機能を使います
+            // '/resources/views/product/lineup.blade.php'にもページネーションに関する記述をお忘れなく！
+            ->paginate(5);
 
         // オブジェクトとして扱えるようにします
         return $products;
@@ -186,26 +186,26 @@ class Product extends Model
         // 中身 : クエリビルダでproductsテーブル内のデータを取得します
         $product = DB::table('products')
 
-        // productsテーブルのcompany_idとcompaniesテーブルのidでリレーションを組みます
-        ->join('companies', 'products.company_id', '=', 'companies.id')
+            // productsテーブルのcompany_idとcompaniesテーブルのidでリレーションを組みます
+            ->join('companies', 'products.company_id', '=', 'companies.id')
 
-        // select文で、DBからとってきたい値のあるカラムを選択します
-        ->select(
-            'products.id',
-            'products.image',
-            'products.product_name',
-            'products.price',
-            'products.stock',
-            'products.comment',
-            'products.company_id',
-            'companies.company_name',
-        )
+            // select文で、DBからとってきたい値のあるカラムを選択します
+            ->select(
+                'products.id',
+                'products.image',
+                'products.product_name',
+                'products.price',
+                'products.stock',
+                'products.comment',
+                'products.company_id',
+                'companies.company_name',
+            )
 
-        // productsテーブルのidと、$idの持つidの値が一致するものを探して、
-        ->where('products.id', $id)
+            // productsテーブルのidと、$idの持つidの値が一致するものを探して、
+            ->where('products.id', $id)
 
-        // その中で最初の1件を取得します
-        ->first();
+            // その中で最初の1件を取得します
+            ->first();
 
         // オブジェクトとして扱えるようにします
         return $product;
@@ -255,18 +255,18 @@ class Product extends Model
         // productsテーブルの
         DB::table('products')
 
-        // productsテーブルのidと、$paramの持つidの値が一致するものを探して、
-        ->where('id', $param['id'])
+            // productsテーブルのidと、$paramの持つidの値が一致するものを探して、
+            ->where('id', $param['id'])
 
-        // それぞれのカラムの内容(=>の左)を引数(=>の右)の値で更新します
-        ->update([
-            'company_id'   => $param['company_id'],
-            'product_name' => $param['product_name'],
-            'price'        => $param['price'],
-            'stock'        => $param['stock'],
-            'comment'      => $param['comment'],
-            'image'        => $param['image']
-        ]);
+            // それぞれのカラムの内容(=>の左)を引数(=>の右)の値で更新します
+            ->update([
+                'company_id'   => $param['company_id'],
+                'product_name' => $param['product_name'],
+                'price'        => $param['price'],
+                'stock'        => $param['stock'],
+                'comment'      => $param['comment'],
+                'image'        => $param['image']
+            ]);
     }
 
 

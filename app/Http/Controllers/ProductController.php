@@ -48,7 +48,7 @@ class ProductController extends Controller
      * 自分で見返すときはもちろん、いつか来る改修案件の時、すごく助かります。
      * 
      * @paramには引数を書きます。
-     * Requestクラス(useしていますね！)で受け取ったデータを%requestとして使います
+     * Requestクラス(useしていますね！)で受け取ったデータを$requestとして使います
      * 
      * @returnには返り値を書きます
      * 
@@ -67,7 +67,7 @@ class ProductController extends Controller
         // try catchを入れることで、正常な処理の時はtryを。エラーがあった際のみcatchに書いた内容が実行されます
         try {
             // 箱  ： $productListという名前の変数(function同様に、中身が分かるものがよい)
-            // 中身： Product.phpのproduct_infoにアクセス
+            // 中身： Product.phpのproductListにアクセス
             $product_list = $this->product->productList();
 
             // 箱  ： $company_dataという名前の変数(function同様に、中身が分かるものがよい)
@@ -209,7 +209,7 @@ class ProductController extends Controller
      * 自分で見返すときはもちろん、いつか来る改修案件の時、すごく助かります。
      * 
      * @paramには引数を書きます。
-     * ProductRequestクラス(useしていますね！)で受け取ったデータを%requestとして使います
+     * ProductRequestクラス(useしていますね！)で受け取ったデータを$requestとして使います
      *
      * @param ProductRequest $request
      */
@@ -343,7 +343,7 @@ class ProductController extends Controller
      * 自分で見返すときはもちろん、いつか来る改修案件の時、すごく助かります。
      * 
      * @paramには引数を書きます。
-     * ProductRequestクラス(useしていますね！)で受け取ったデータを%requestとして使います
+     * ProductRequestクラス(useしていますね！)で受け取ったデータを$requestとして使います
      * 
      * @param ProductRequest $request
      */
@@ -383,7 +383,7 @@ class ProductController extends Controller
 
         // try catchを入れることで、正常な処理の時はtryを。エラーがあった際のみcatchに書いた内容が実行されます
         try {
-            // Product.phpのcreateProductにアクセス
+            // Product.phpのupdateProductにアクセス
             // 欲しいデータを揃えた$update_dataを使いたいので、引数として渡します。
             $this->product->updateProduct($update_data);
 
