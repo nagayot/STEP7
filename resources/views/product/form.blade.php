@@ -4,28 +4,37 @@
 <div class="row">
     <div class="col-md-8 col-md-offset-2">
         <h2>商品登録</h2>
-        <!-- formタグで囲ってあげた部分を、ProductControllerのstoreメソッドに渡します -->
-        <!-- onSubmitは、データを送信した際の挙動を指定できるので、今回はpublic/js/alert.jsの中のcheckSubmitを呼んであげます -->
-        <!-- どこでalert.js読み込んでんねーーんと思うかもですが、このblade自体が'resources/layouts/common'を継承しています。 -->
-        <!-- common.blade.phpで読み込んであげると、継承している他のbladeでも使用可能になります！ -->
+        
+        {{-- formタグで囲ってあげた部分を、ProductControllerのstoreメソッドに渡します --}}
+        {{-- onSubmitは、データを送信した際の挙動を指定できるので、今回はpublic/js/alert.jsの中のcheckSubmitを呼んであげます --}}
+        {{-- どこでalert.js読み込んでんねーーんと思うかもですが、このblade自体が'resources/layouts/common'を継承しています(一番上の@extendsで) --}}
+        {{-- common.blade.phpで読み込んであげると、継承している他のbladeでも使用可能になります！ --}}
+        
         <form method="POST" enctype="multipart/form-data" action="{{ route('product.store') }}" onSubmit="return checkSubmit()">
             <!-- method="POST"時は、@csrfをお忘れなく。セキュリティ対策です！ -->
             @csrf
             <div class="form-group">
+
                 <label for="company_id">
                     メーカー名
                 </label>
+
                 <select name="company_id">
                     <option selected="selected" value="">メーカーを選択してください</option>
+                    
+                    {{-- ProductControllerのshowCreateメソッドで、viewに$selectItems渡してましたね！ --}}
                     @foreach($selectItems as $selectItem)
+                        {{-- 裏で持つデータはcompanyのidですが、実際に表示するのはcompany_name --}}
                         <option id="company_id" name="company_id" value="{{ $selectItem->id }}">{{ $selectItem->company_name }}</option>
                     @endforeach
                 </select>
+
                 @if ($errors->has('company_id'))
                     <div class="text-danger">
                         {{ $errors->first('company_id') }}
                     </div>
                 @endif
+
             </div>
 
             <div class="form-group">
@@ -111,6 +120,7 @@
                     登録する
                 </button>
             </div>
+
         </form>
     </div>
 </div>
