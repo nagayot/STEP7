@@ -26,6 +26,7 @@
  ①/routes/web.php
 
  ②/app/Models(コマンドで追加)  
+ /Modelsフォルダ(ディレクトリ)は手動で追加  
  php artisan make:model Models/Product  
  php artisan make:model Models/Company
 
