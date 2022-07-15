@@ -25,89 +25,77 @@
 
  1. /routes/web.php
 
- 2. /app/Models(コマンドで追加)  
- /Modelsフォルダ(ディレクトリ)は手動で追加  
+ 2. /app/Models(コマンドで追加)
+ Modelsディレクトリ(フォルダ)は手動で追加  
+ ```
  php artisan make:model Models/Product  
  php artisan make:model Models/Company
+ ```
 
  3. /app/Http/Controllers(コマンドで追加)  
+ ```
  php artisan make:controller ProductController
+ ```
 
- 4. /resources/views(コマンドではなく手動でファイル追加)  
+ 4. /resources/views(手動でファイル追加)  
 
- 5. /config/message.php(コマンドではなく手動でファイル追加)  
+ 5. /config/message.php(手動でファイル追加)  
 
- 6. /public/js/alert.js(コマンドではなく手動でファイル追加)  
+ 6. /public/js/alert.js(手動でファイル追加)  
 
  7. /app/Http/Requests(コマンドで追加)  
+ ```
  php artisan make:request ProductRequest
+ ```
 
   --------------------------------
 
 
 
- **〜 STEP7でお世話になるであろう記事たち 〜**
+ # 〜 STEP7でお世話になるであろう記事たち 〜
 
- ◎ Model関連
-
- --------------------------------
+ ## ◎ Model関連
  
- ・[Modelにメソッドを書く](https://laraweb.net/practice/4865/)
+ - [Modelにメソッドを書く](https://laraweb.net/practice/4865/)
 
- ・[仮引数と実引数　値渡しについて](https://www.sejuku.net/blog/23615)
+ - [仮引数と実引数　値渡しについて](https://www.sejuku.net/blog/23615)
 
- ・[ファットコントローラー回避術](https://www.kamome-susume.com/laravel-fatcontroler/)
-
- --------------------------------
+ - [ファットコントローラー回避術](https://www.kamome-susume.com/laravel-fatcontroler/)
 
 
+ ## ◎ Controller関連
 
- ◎ Controller関連
+ - [コンストラクタについて](https://laraweb.net/surrounding/1472/)
 
- --------------------------------
+ - [try catchについて](https://qiita.com/Chelsea/items/59436cfda149a6ac6c91)
 
- ・[コンストラクタについて](https://laraweb.net/surrounding/1472/)
-
- ・[try catchについて](https://qiita.com/Chelsea/items/59436cfda149a6ac6c91)
-
- ・[$requestについて その1](https://prograshi.com/framework/laravel/request-method-injection/)
+ - [$requestについて その1](https://prograshi.com/framework/laravel/request-method-injection/)
  
- ・[$requestについて その2](https://nebikatsu.com/6784.html/)
+ - [$requestについて その2](https://nebikatsu.com/6784.html/)
 
- ・[クエリビルダとEloquentの違いに関して](https://biz.addisteria.com/query_builder/)
-
- --------------------------------
+ - [クエリビルダとEloquentの違いに関して](https://biz.addisteria.com/query_builder/)
 
 
- ◎ View関連
 
- --------------------------------
+ ## ◎ View関連
+ 
+ - [Bladeファイル内のコメントアウトについて](https://buralog.jp/laravel-blade-template-file-comments/)
 
- ・[Bladeファイル内のコメントアウトについて](https://buralog.jp/laravel-blade-template-file-comments/)
+ - [@forelseディレクティブについて](https://qiita.com/Masahiro111/items/008a6db75e98ea17f398)
 
- ・[@forelseディレクティブについて](https://qiita.com/Masahiro111/items/008a6db75e98ea17f398)
+ - [BEM記法](https://qiita.com/takahirocook/items/01fd723b934e3b38cbbc)
 
- ・[BEM記法](https://qiita.com/takahirocook/items/01fd723b934e3b38cbbc)
-
- ・[old関数について](https://www.kamome-susume.com/laravel-old/)
-
- --------------------------------
+ - [old関数について](https://www.kamome-susume.com/laravel-old/)
 
 
- ◎ ルーティング関連
+ ## ◎ルーティング関連
 
- --------------------------------
+ - [Laravel6公式レファレンス ルーティング](https://readouble.com/laravel/6.x/ja/routing.html)
 
- ・[Laravel6公式レファレンス ルーティング](https://readouble.com/laravel/6.x/ja/routing.html)
-
- ・[Laravelルーティングまとめ！](https://codelikes.com/laravel-routing-summary/)
-
- --------------------------------
+ - [Laravelルーティングまとめ！](https://codelikes.com/laravel-routing-summary/)
 
 
- ◎ その他
-
- --------------------------------
+ ## ◎ その他
 
  ・[Laravel エラーメッセージ等の日本語化](https://into-the-program.com/laravel-message-translation-japanese/)
 
@@ -116,5 +104,3 @@
  ・[VS Codeショートカットキー(Mac版)](https://qiita.com/naru0504/items/99495c4482cd158ddca8)
 
  ・[VS Codeショートカットキー(Windows版)](https://qiita.com/TakahiRoyte/items/cdab6fca64da386a690b)
-
- --------------------------------
