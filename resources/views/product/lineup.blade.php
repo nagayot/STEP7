@@ -48,6 +48,7 @@
             @endif
             {{-- ↑なんらかのメッセージを表示する部分↑ --}}
 
+            {{-- ↓一覧データ表示部分↓ --}}
             <table class="table table-striped">
                 <tr>
                     <th>商品ID</th>
@@ -64,9 +65,12 @@
                     <tr>
                         <td>{{ $product->id }}</td>
                         <td>
+                            {{-- imageは入力必須でないので、画像投稿しなかった場合のことも考えてあげる --}}
                             @if ($product->image === null)
+                                {{-- noimage.pngという名前の適当な画像を用意して、storageディレクトリ内に置いておく --}}
                                 <img class="w-25 h-25" src="/storage/noimage.png">
                             @else
+                                {{-- 画像投稿があった場合は、投降した画像を表示する --}}
                                 <img class="w-25 h-25" src="{{ asset( '/storage'.$product->image ) }}">
                             @endif
                         </td>
@@ -93,12 +97,15 @@
                     <p class="text-danger">{{ config('message.message6') }}</p>
                 @endforelse
             </table>
+            {{-- ↑一覧データ表示部分↑ --}}
+
             {{-- ↓ページネーション機能↓ --}}
             {{-- この書き方をすると、ページを変えても検索条件が保持されたままになります --}}
             <div class = "paginate mt-5 mb-5 d-flex justify-content-center">
                 {{ $data['product_list']->appends(request()->input())->links() }}
             </div>
             {{-- ↑ページネーション機能↑ --}}
+
         </div>
     </div>
 </div>
