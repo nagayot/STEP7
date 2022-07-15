@@ -11,7 +11,7 @@
         {{-- common.blade.phpで読み込んであげると、継承している他のbladeでも使用可能になります！ --}}
         
         <form method="POST" enctype="multipart/form-data" action="{{ route('product.store') }}" onSubmit="return checkSubmit()">
-            <!-- method="POST"時は、@csrfをお忘れなく。セキュリティ対策です！ -->
+            {{-- method="POST"時は、@csrfをお忘れなく。セキュリティ対策です！ --}}
             @csrf
             <div class="form-group">
 
