@@ -1,5 +1,9 @@
 <?php
 
+// DBとのやりとりをする処理はModelに書いていきます
+// ContorollerでDBとのやり取りをしたい時は、DBとやり取りしているModelのメソッドを呼び出す形にしましょう！
+
+// ↓Product.phpの住所↓
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
@@ -9,6 +13,7 @@ use Illuminate\Database\Eloquent\Model;
 // それでもクエリビルダを用いる理由は、以下の２つ
 // ① EloquentORMより処理速度が速い
 // ② SQLの勉強にもなる
+// 2つの違いについての記事を、READMEにのっけています！
 use Illuminate\Support\Facades\DB;
 
 class Product extends Model
@@ -54,6 +59,7 @@ class Product extends Model
             ->join('companies', 'products.company_id', '=', 'companies.id')
 
             // select文で、DBからとってきたい値のあるカラムを選択します
+            // 'テーブル名.カラム名'
             ->select(
                 'products.id',
                 'products.image',
@@ -64,7 +70,7 @@ class Product extends Model
                 'companies.company_name',
             )
 
-            // orderByを使って、productsテーブルのidが新しい順に並び替えます
+            // orderByを使って、productsテーブルのselect文で選んだデータを、idの降順で並び替えます
             ->orderBy('products.id', 'desc')
 
             // １ページ最大5件になるようにページネーション機能を使います
@@ -72,6 +78,8 @@ class Product extends Model
             ->paginate(5);
 
         // オブジェクトとして扱えるようにします
+        // つまりどういうことかと言いますと、DB::table('products')~paginate(5);までを
+        // 最初に作った$productsという箱で持ち運びできるようにしようってわけですわ
         return $products;
     }
 
@@ -87,7 +95,6 @@ class Product extends Model
      * 
      * これを値渡しと言います(READMEに記事のっけておきます！)
      * 
-     * 
      * @param  $param
      * @return $products
      */
@@ -101,6 +108,7 @@ class Product extends Model
             ->join('companies', 'products.company_id', '=', 'companies.id')
 
             // select文で欲しい情報を選択します
+            // 'テーブル名.カラム名'
             ->select(
                 'products.id',
                 'products.image',
@@ -122,6 +130,8 @@ class Product extends Model
             ->paginate(5);
 
         // オブジェクトとして扱えるようにします
+        // つまりどういうことかと言いますと、DB::table('products')~paginate(5);までを
+        // 最初に作った$productsという箱で持ち運びできるようにしようってわけですわ
         return $products;
     }
 
@@ -150,6 +160,7 @@ class Product extends Model
             ->join('companies', 'products.company_id', '=', 'companies.id')
 
             // select文で欲しい情報を選択します
+            // 'テーブル名.カラム名'
             ->select(
                 'products.id',
                 'products.image',
@@ -171,6 +182,8 @@ class Product extends Model
             ->paginate(5);
 
         // オブジェクトとして扱えるようにします
+        // つまりどういうことかと言いますと、DB::table('products')~paginate(5);までを
+        // 最初に作った$productsという箱で持ち運びできるようにしようってわけですわ
         return $products;
     }
 
@@ -190,6 +203,7 @@ class Product extends Model
             ->join('companies', 'products.company_id', '=', 'companies.id')
 
             // select文で、DBからとってきたい値のあるカラムを選択します
+            // 'テーブル名.カラム名'
             ->select(
                 'products.id',
                 'products.image',
@@ -208,6 +222,8 @@ class Product extends Model
             ->first();
 
         // オブジェクトとして扱えるようにします
+        // つまりどういうことかと言いますと、DB::table('products')~first();までを
+        // 最初に作った$productという箱で持ち運びできるようにしようってわけですわ
         return $product;
     }
 
@@ -226,7 +242,9 @@ class Product extends Model
      * @param $param
      */
     public function createProduct($param) {
-        // productsテーブルのカラム(=>の左)に、引数(=>の右)の値を挿入します
+        // $paramには$insert_dataのデータが入っている(引数で渡した)ので、
+        // productsテーブルのカラム(=>の左)に、引数(=>の右)の値を挿入(insert)していきます
+        
         DB::table('products')->insert([
             'company_id'   => $param['company_id'],
             'product_name' => $param['product_name'],
