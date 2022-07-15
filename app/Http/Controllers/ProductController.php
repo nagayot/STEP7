@@ -32,6 +32,9 @@ class ProductController extends Controller
         $this->middleware('auth');
         
         // newすることで、モデルクラスのインスタンスが使用可能になります
+        // 設計図(クラス)とそこから作ったもの(インスタンス)...
+        // 理解できるまでは壁がありますが、乗り越えたらなんで詰まってたんだ？くらいの気持ちになれます
+        
         $this->product = new Product();
         $this->company = new Company();
     }
@@ -47,17 +50,16 @@ class ProductController extends Controller
      * 「/**」と打ってEnterキー押すと、自動で作ってくれます。
      * 自分で見返すときはもちろん、いつか来る改修案件の時、すごく助かります。
      * 
-     * @paramには引数を書きます。
      * Requestクラス(useしていますね！)で受け取ったデータを$requestとして使います
      * 
-     * @returnには返り値を書きます
+     * ↓の@paramには引数を、@returnには返り値を書きます
      * 
      * @param Request $request    リクエスト($request)は、ブラウザからユーザーが送る情報のことです(例:ログイン時のメールアドレス＆パスワード)
      * @return view
      */
     public function showLineup(Request $request) {
         // 箱  ： $keywordという名前の変数(function同様に、中身が分かるものがよい)
-        // 中身： 検索窓(lineup.blade.phpのnameがkeywordのinputタグ)に入力された文字を取得します
+        // 中身： 検索窓(lineup.blade.phpのname属性がkeywordのinputタグ)に入力された文字を取得します
         $keyword = $request->input('keyword');
 
         // 箱  ： $selected_nameという名前の変数(function同様に、中身が分かるものがよい)
@@ -126,7 +128,7 @@ class ProductController extends Controller
      * 引数に指定している$idは変数として定義されてないのになんで使えるの？と思ったそこのあなた。
      * これはルートパラメータと言います。分からなければ、ググりましょう！
      * 
-     * @paramには引数、@returnには返り値を書きます。
+     * ↓の@paramには引数、@returnには返り値を書きます。
      * 
      * @param $id
      * @return view
@@ -173,7 +175,7 @@ class ProductController extends Controller
      * 「/**」と打ってEnterキー押すと、自動で作ってくれます。
      * 自分で見返すときはもちろん、いつか来る改修案件の時、すごく助かります。
      * 
-     * @returnには返り値を書きます。
+     * ↓の@returnには返り値を書きます。
      * 
      * @return view
      */
@@ -208,8 +210,8 @@ class ProductController extends Controller
      * 「/**」と打ってEnterキー押すと、自動で作ってくれます。
      * 自分で見返すときはもちろん、いつか来る改修案件の時、すごく助かります。
      * 
-     * @paramには引数を書きます。
      * ProductRequestクラス(useしていますね！)で受け取ったデータを$requestとして使います
+     * ↓の@paramには引数を書きます。
      *
      * @param ProductRequest $request
      */
@@ -290,7 +292,7 @@ class ProductController extends Controller
      * 引数に指定している$idは変数として定義されてないのになんで使えるの？と思ったそこのあなた。
      * これはルートパラメータと言います。分からなければ、ググりましょう！
      * 
-     * @paramには引数、@returnには返り値を書きます。
+     * ↓の@paramには引数、@returnには返り値を書きます。
      * 
      * 
      * @param $id
@@ -342,8 +344,8 @@ class ProductController extends Controller
      * 「/**」と打ってEnterキー押すと、自動で作ってくれます。
      * 自分で見返すときはもちろん、いつか来る改修案件の時、すごく助かります。
      * 
-     * @paramには引数を書きます。
      * ProductRequestクラス(useしていますね！)で受け取ったデータを$requestとして使います
+     * ↓の@paramには引数を書きます。
      * 
      * @param ProductRequest $request
      */
@@ -419,10 +421,9 @@ class ProductController extends Controller
      * 「/**」と打ってEnterキー押すと、自動で作ってくれます。
      * 自分で見返すときはもちろん、いつか来る改修案件の時、すごく助かります。
      * 
-     * @paramには引数を書きます。
-     * 第一引数はProductRequest
-     * 第二引数は$requestとなっています。
-     * ProductRequestの$requestとかではないです。別物です。
+     * 引数に指定している$idは変数として定義されてないのになんで使えるの？と思ったそこのあなた。
+     * これはルートパラメータと言います。分からなければ、ググりましょう！
+     * ↓の@paramには引数を書きます
      * 
      * @param $id
      */
