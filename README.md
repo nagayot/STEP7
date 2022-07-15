@@ -14,7 +14,7 @@
  動画を見て以下の流れが分かれば、あとは実践あるのみ！:technologist:  
  - web.phpでルーティングを決めたら、  
  - ModelにDB周りの処理を、  
- - Contollerには、Modelで持って来た処理をViewへ渡すことを意識して、  
+ - Contollerには、Modelの処理をViewへ渡すことを意識して、  
  - Viewでは、ちゃんとContollerからデータを受け取れているかのチェック！(変数など)  
 
 
