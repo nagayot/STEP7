@@ -2,64 +2,61 @@
  STEP7の見本です( ͡° ͜ʖ ͡°)
 
  
- こちらの動画をベースとしています(旧STEP3の福さんの動画です)
- https://youtu.be/cO9Kfh3lypg
+ [こちら](https://youtu.be/cO9Kfh3lypg)の動画をベースとしています(旧STEP3の福さんの動画です)
+ 
 
 
  管理システム作成課題のスプレッドシートのコード規約。ちゃんと読んでいますか？  
- 仕様に沿ってコーディングしましょう！(自戒)  
- 今回。特にBladeは動画で提供されているものを使っているので、BEM記法はご容赦。  
+ 仕様に沿ってコーディングしましょう！(自戒:skull_and_crossbones:)  
+ ただし、viewは動画で提供されているものを使っているので、BEM記法はご容赦:bowing_man:  
 
 
  その他、ここどうなってるの？等あればお気軽にどうぞ〜  
 
 
- web.phpでルーティングを決めたら、  
- ModelにDB周りの処理を、  
- Contollerには、Modelで持って来た処理をViewへ渡すことを意識して、  
- Viewでは、ちゃんとContollerからデータを受け取れているかのチェック！(変数など)  
+ - web.phpでルーティングを決めたら、  
+ - ModelにDB周りの処理を、  
+ - Contollerには、Modelで持って来た処理をViewへ渡すことを意識して、  
+ - Viewでは、ちゃんとContollerからデータを受け取れているかのチェック！(変数など)  
 
  この流れを踏まえて、以下の①~⑦が主に触れる場所になります  
 
  --------------------------------
 
- ①/routes/web.php
+ 1. /routes/web.php
 
- ②/app/Models(コマンドで追加)  
+ 2. /app/Models(コマンドで追加)  
  /Modelsフォルダ(ディレクトリ)は手動で追加  
  php artisan make:model Models/Product  
  php artisan make:model Models/Company
 
- ③/app/Http/Controllers(コマンドで追加)  
+ 3. /app/Http/Controllers(コマンドで追加)  
  php artisan make:controller ProductController
 
- ④/resources/views(コマンドではなく手動でファイル追加)  
+ 4. /resources/views(コマンドではなく手動でファイル追加)  
 
- ⑤/config/message.php(コマンドではなく手動でファイル追加)  
+ 5. /config/message.php(コマンドではなく手動でファイル追加)  
 
- ⑥/public/js/alert.js(コマンドではなく手動でファイル追加)  
+ 6. /public/js/alert.js(コマンドではなく手動でファイル追加)  
 
- ⑦/app/Http/Requests(コマンドで追加)  
+ 7. /app/Http/Requests(コマンドで追加)  
  php artisan make:request ProductRequest
 
   --------------------------------
 
 
 
- 〜 STEP7でお世話になるであろう記事たち 〜
+ **〜 STEP7でお世話になるであろう記事たち 〜**
 
  ◎ Model関連
 
  --------------------------------
  
- ・Model活用法  
- https://laraweb.net/practice/4865/
+ ・[Modelにメソッドを書く](https://laraweb.net/practice/4865/)
 
- ・仮引数と実引数　値渡しについて  
- https://www.sejuku.net/blog/23615
+ ・[仮引数と実引数　値渡しについて](https://www.sejuku.net/blog/23615)
 
- ・ファットコントローラー回避術  
- https://www.kamome-susume.com/laravel-fatcontroler/
+ ・[ファットコントローラー回避術](https://www.kamome-susume.com/laravel-fatcontroler/)
 
  --------------------------------
 
@@ -69,18 +66,15 @@
 
  --------------------------------
 
- ・コンストラクタについて  
- https://laraweb.net/surrounding/1472/
+ ・[コンストラクタについて](https://laraweb.net/surrounding/1472/)
 
- ・try catchについて  
- https://qiita.com/Chelsea/items/59436cfda149a6ac6c91
+ ・[try catchについて](https://qiita.com/Chelsea/items/59436cfda149a6ac6c91)
 
- ・$requestについて  
- https://prograshi.com/framework/laravel/request-method-injection/
- https://nebikatsu.com/6784.html/
+ ・[$requestについて その1](https://prograshi.com/framework/laravel/request-method-injection/)
+ 
+ ・[$requestについて その2](https://nebikatsu.com/6784.html/)
 
- ・クエリビルダとEloquentの違いに関して  
- https://biz.addisteria.com/query_builder/
+ ・[クエリビルダとEloquentの違いに関して](https://biz.addisteria.com/query_builder/)
 
  --------------------------------
 
@@ -89,17 +83,13 @@
 
  --------------------------------
 
- ・Bladeファイル内のコメントアウトについて  
- https://buralog.jp/laravel-blade-template-file-comments/
+ ・[Bladeファイル内のコメントアウトについて](https://buralog.jp/laravel-blade-template-file-comments/)
 
- ・@forelseディレクティブについて  
- https://qiita.com/Masahiro111/items/008a6db75e98ea17f398
+ ・[@forelseディレクティブについて](https://qiita.com/Masahiro111/items/008a6db75e98ea17f398)
 
- ・BEM記法  
- https://qiita.com/takahirocook/items/01fd723b934e3b38cbbc
+ ・[BEM記法](https://qiita.com/takahirocook/items/01fd723b934e3b38cbbc)
 
- ・old関数について  
- https://www.kamome-susume.com/laravel-old/
+ ・[old関数について](https://www.kamome-susume.com/laravel-old/)
 
  --------------------------------
 
@@ -108,11 +98,9 @@
 
  --------------------------------
 
- ・Laravel6公式レファレンス ルーティング  
- https://readouble.com/laravel/6.x/ja/routing.html
+ ・[Laravel6公式レファレンス ルーティング](https://readouble.com/laravel/6.x/ja/routing.html)
 
- ・Laravelルーティングまとめ！  
- https://codelikes.com/laravel-routing-summary/
+ ・[Laravelルーティングまとめ！](https://codelikes.com/laravel-routing-summary/)
 
  --------------------------------
 
@@ -121,16 +109,12 @@
 
  --------------------------------
 
- ・Laravel エラーメッセージ等の日本語化  
- https://into-the-program.com/laravel-message-translation-japanese/
+ ・[Laravel エラーメッセージ等の日本語化](https://into-the-program.com/laravel-message-translation-japanese/)
 
- ・Laravel オブジェクト指向でよく見る単語たち  
- https://qiita.com/miriwo/items/974adcee45f699553cd4
+ ・[Laravel オブジェクト指向でよく見る単語たち](https://qiita.com/miriwo/items/974adcee45f699553cd4)
 
- ・VS Codeショートカットキー(Mac版)  
- https://qiita.com/naru0504/items/99495c4482cd158ddca8
+ ・[VS Codeショートカットキー(Mac版)](https://qiita.com/naru0504/items/99495c4482cd158ddca8)
 
- ・VS Codeショートカットキー(Windows版)  
- https://qiita.com/TakahiRoyte/items/cdab6fca64da386a690b
+ ・[VS Codeショートカットキー(Windows版)](https://qiita.com/TakahiRoyte/items/cdab6fca64da386a690b)
 
  --------------------------------
