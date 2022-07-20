@@ -16,6 +16,9 @@ use Illuminate\Database\Eloquent\Model;
 // 2つの違いについての記事を、READMEにのっけています！
 use Illuminate\Support\Facades\DB;
 
+// TODO:join~selectまで同じことしてる文が多いからまとめたい
+// Eloquentならスコープとでまとめられそう。クエリビルダはいい方法ないかな
+
 class Product extends Model
 {
     // Product.php(Model)と紐づくDBのテーブルを選択します
