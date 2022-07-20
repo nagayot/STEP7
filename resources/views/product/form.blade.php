@@ -1,5 +1,5 @@
 @extends('layouts.common')
-@section('title', '商品詳細')
+@section('title', '商品登録')
 @section('lineup')
 <div class="row">
     <div class="col-md-8 col-md-offset-2">
