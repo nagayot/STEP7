@@ -227,8 +227,10 @@ class ProductController extends Controller
             // 中身: getPathname()で画像のパスを取得します。
             $image_path = $image->getPathname();
 
-            // 箱  : $image_nameという名前の変数(function同様に、中身が分かるものがよい)
-            // 中身: storeAs()で画像を保存します。
+            // if文開始前で宣言した$imageの中身の続きで、
+            // $request->file('image')->storeAs('', $image_path, 'public');
+            // と同じ意味になります！
+            // $image_pathで取得した名前で、publicディレクトリに画像を保存する処理です
             $image->storeAs('', $image_path, 'public');
         }
 
