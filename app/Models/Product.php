@@ -135,6 +135,27 @@ class Product extends Model
         return $products;
     }
 
+    // キーワード×メーカ名検索
+    // TODO:とりあえず実装だけ。名前カッコよくしたい
+    public function searchProductByCrossParams($keyword, $company_info) {
+        $data = DB::table('products')
+            ->join('companies', 'products.company_id', '=', 'companies.id')
+            ->select(
+                'products.id',
+                'products.image',
+                'products.product_name',
+                'products.price',
+                'products.stock',
+                'products.comment',
+                'companies.company_name',
+            )
+            ->where('products.product_name', 'LIKE', '%'.$keyword.'%')
+            ->where('products.company_id', $company_info)
+            ->orderBy('products.id', 'desc')
+            ->paginate(5);
+
+        return $data;
+    }
 
     /**
      * 選択されたメーカー名に紐づくcompaniesテーブルのidで商品を検索します

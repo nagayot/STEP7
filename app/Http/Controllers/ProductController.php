@@ -83,11 +83,16 @@ class ProductController extends Controller
                 $product_list = $this->product->searchProductByKeyword($keyword);
             }
 
-            // プルダウンメニューでの検索が行われた場合
+            // プルダウンメニュー(メーカー名)での検索が行われた場合
             if (!empty($selected_name)) {
                 // 箱  ： $product_listという名前の変数(function同様に、中身が分かるものがよい)
                 // 中身： Product.phpのsearchProductByCompanyNameにアクセス
                 $product_list = $this->product->searchProductByCompanyName($selected_name);
+            }
+
+            // キーワード×メーカー名検索
+            if (!empty($keyword) && !empty($selected_name)) {
+                $product_list = $this->product->searchProductByCrossParams($keyword, $selected_name);
             }
 
         } catch (\Throwable $e) {
