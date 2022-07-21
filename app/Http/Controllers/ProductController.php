@@ -39,6 +39,49 @@ class ProductController extends Controller
         $this->company = new Company();
     }
 
+
+    /**
+     * DBへ渡すデータを生成するメソッドです
+     * 
+     * 登録と更新で同じデータを渡します。
+     * 2回に分けて書くのではなく、渡すデータ部分のみを切り取り、このメソッドを呼び出します。
+     *
+     * @param ProductRequest $request
+     * @return $data
+     */
+    public function dataToDataBase(ProductRequest $request) {
+
+        // 箱  : $imageいう名前の変数(function同様に、中身が分かるものがよい)
+        // 中身: $request内のimageをfileメソッドで取得
+        // 画像関係の実装をする際は、シンボリックリンクを貼ることをお忘れなく!
+        $image = $request->file('image');
+
+        // もし画像が登録されていたら(空でなければ)
+        if (!empty($image)) {
+            // 箱  : $image_pathという名前の変数(function同様に、中身が分かるものがよい)
+            // 中身: getPathname()で画像のパスを取得します。
+            $image_path = $image->getPathname();
+
+            // if文開始前で宣言した$imageの中身の続きで、
+            // $request->file('image')->storeAs('', $image_path, 'public');
+            // と同じ意味になります！
+            // $image_pathで取得した名前で、publicディレクトリに画像を保存する処理です
+            $image->storeAs('', $image_path, 'public');
+        }
+
+        $data = [];
+        $data['id'] = $request->input('id');
+        $data['company_id'] = $request->input('company_id');
+        $data['product_name'] = $request->input('product_name');
+        $data['price'] = $request->input('price');
+        $data['stock'] = $request->input('stock');
+        $data['comment'] = $request->input('comment');
+        $data['image'] = $image;
+
+        return $data;
+    }
+
+
     /**
      * 商品一覧画面を表示
      * 
@@ -210,34 +253,10 @@ class ProductController extends Controller
      * @param ProductRequest $request
      */
     public function exeStore(ProductRequest $request) {
-        // 箱  : $image_nameという名前の変数(function同様に、中身が分かるものがよい)
-        // 中身: $request内のimageをfileメソッドで取得
-        // 画像関係の実装をする際は、シンボリックリンクを貼ることをお忘れなく!
-        $image = $request->file('image');
 
-        // もし画像が登録されていたら(空でなければ)
-        if (!empty($image)) {
-            // 箱  : $image_pathという名前の変数(function同様に、中身が分かるものがよい)
-            // 中身: getPathname()で画像のパスを取得します。
-            $image_path = $image->getPathname();
-
-            // if文開始前で宣言した$imageの中身の続きで、
-            // $request->file('image')->storeAs('', $image_path, 'public');
-            // と同じ意味になります！
-            // $image_pathで取得した名前で、publicディレクトリに画像を保存する処理です
-            $image->storeAs('', $image_path, 'public');
-        }
-
-        // 箱  : $insert_dataという名前の変数(function同様に、中身が分かるものがよい)
-        // 中身: 空の配列
-        // 結果取得用で空の配列を作っておき、欲しいデータを突込んでいきます。
-        $insert_data = [];
-        $insert_data['company_id'] = $request->input('company_id');
-        $insert_data['product_name'] = $request->input('product_name');
-        $insert_data['price'] = $request->input('price');
-        $insert_data['stock'] = $request->input('stock');
-        $insert_data['comment'] = $request->input('comment');
-        $insert_data['image'] = $image;
+        // 箱  ：$insert_dataという名前の変数(function同様に、中身が分かるものがよい)
+        // 中身：$thisでクラス(ProductControllerの)を指します。そのクラス内にある、dataToDataBaseメソッドを呼び出します。
+        $insert_data = $this->dataToDataBase($request);
 
         // トランザクションの開始
         // DB内容を変更する際は、トランザクションを使いましょう！
@@ -346,33 +365,10 @@ class ProductController extends Controller
      * @param ProductRequest $request
      */
     public function exeUpdate(ProductRequest $request) {
-        // 箱  : $image_nameという名前の変数(function同様に、中身が分かるものがよい)
-        // 中身: $request内のimageをfileメソッドで取得
-        // 画像関係の実装をする際は、シンボリックリンクを貼ることをお忘れなく!
-        $image = $request->file('image');
 
-        // もし画像が登録されていたら(空でなければ)
-        if (!empty($image)) {
-            // 箱  : $image_pathという名前の変数(function同様に、中身が分かるものがよい)
-            // 中身: getPathname()で画像のパスを取得します。
-            $image_path = $image->getPathname();
-
-            // 箱  : $image_nameという名前の変数(function同様に、中身が分かるものがよい)
-            // 中身: storeAs()で画像を保存します。
-            $image->storeAs('', $image_path, 'public');
-        }
-
-        // 箱  : $insert_dataという名前の変数(function同様に、中身が分かるものがよい)
-        // 中身: 空の配列
-        // 結果取得用で空の配列を作っておき、欲しいデータを突込んでいきます。
-        $update_data = [];
-        $update_data['id'] = $request->input('id');
-        $update_data['company_id'] = $request->input('company_id');
-        $update_data['product_name'] = $request->input('product_name');
-        $update_data['price'] = $request->input('price');
-        $update_data['stock'] = $request->input('stock');
-        $update_data['comment'] = $request->input('comment');
-        $update_data['image'] = $image;
+        // 箱  ：$update_dataという名前の変数(function同様に、中身が分かるものがよい)
+        // 中身：$thisでクラス(ProductControllerの)を指します。そのクラス内にある、dataToDataBaseメソッドを呼び出します。
+        $update_data = $this->dataToDataBase($request);
 
         // トランザクションの開始
         // DB内容を変更する際は、トランザクションを使いましょう！
