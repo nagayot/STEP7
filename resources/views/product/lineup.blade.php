@@ -94,7 +94,7 @@
                     </tr>
                 @empty
                     {{-- '登録されている商品がまだありません。'というメッセージを表示します --}}
-                    <p class="text-danger">{{ config('message.message6') }}</p>
+                    <p class="text-danger">{{ config('message.message5') }}</p>
                 @endforelse
             </table>
             {{-- ↑一覧データ表示部分↑ --}}
