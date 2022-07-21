@@ -16,9 +16,6 @@ use Illuminate\Database\Eloquent\Model;
 // 2つの違いについての記事を、READMEにのっけています！
 use Illuminate\Support\Facades\DB;
 
-// TODO:join~selectまで同じことしてる文が多いからまとめたい
-// Eloquentならスコープとでまとめられそう。クエリビルダはいい方法ないかな
-
 class Product extends Model
 {
     // Product.php(Model)と紐づくDBのテーブルを選択します
@@ -47,6 +44,39 @@ class Product extends Model
         return $this->belongsTo('App\Models\Company');
     }
 
+    /**
+     * join文でproductsテーブルとcompaniesテーブルを合体して、
+     * select文で欲しいカラムを絞り込むクエリ部分
+     * Product.php内では、$this->querySelect()で呼び出すことができます。
+     * 
+     * 呼び出している部分すべてでこの記述をしていると、例えばproductsテーブルのimageカラム無くしますとなった場合
+     * 書いた分だけ修正する必要がありますが、querySelectに書き出してそれを呼び出す今の形にすれば
+     * このメソッド内のsql文だけ変更すればいいだけなので、超楽です！
+     * 
+     * ここの説明意味わからん場合、理解できるまで説明するので、連絡ください！
+     *
+     * @return $sql
+     */
+    public function querySelect() {
+        // productsテーブルに対して
+        $sql = DB::table('products')
+            // companiesテーブルをくっつけます。
+            ->join('companies', 'products.company_id', '=', 'companies.id')
+            // select文を使って、2つのテーブルから欲しいカラムを選択します
+            ->select(
+                'products.id',
+                'products.image',
+                'products.product_name',
+                'products.price',
+                'products.stock',
+                'products.comment',
+                'companies.company_name',
+            );
+
+        // オブジェクトとして使えるようにします
+        return $sql;
+    }
+
 
     /**
      * 一覧表示用のデータ
@@ -56,22 +86,8 @@ class Product extends Model
     public function productList() {
         //  箱  : $productsという名前の変数(function同様に、中身が分かるものがよい)
         // 中身 : クエリビルダでproductsテーブル内のデータを取得します
-        $products = DB::table('products')
-
-            // productsテーブルのcompany_idとcompaniesテーブルのidで、joinを使ってリレーションを組みます
-            ->join('companies', 'products.company_id', '=', 'companies.id')
-
-            // select文で、DBからとってきたい値のあるカラムを選択します
-            // 'テーブル名.カラム名'
-            ->select(
-                'products.id',
-                'products.image',
-                'products.product_name',
-                'products.price',
-                'products.stock',
-                'products.comment',
-                'companies.company_name',
-            )
+        // $thisでモデル(Product.php)のクラスを指定して、その中にあるselectQueryメソッドを呼び出します
+        $products = $this->querySelect()
 
             // orderByを使って、productsテーブルのselect文で選んだデータを、idの降順で並び替えます
             ->orderBy('products.id', 'desc')
@@ -86,134 +102,56 @@ class Product extends Model
         return $products;
     }
 
-
     /**
-     * 入力されたキーワードで商品を検索します
+     * 検索機能
+     * 
+     * Product.php内で一番情報盛りだくさんになってしまった・・・
+     * このメソッドの中身ちゃんと説明するので、わからない場合は遠慮なくDMください。。
+     * 
+     * NOTE:if文を３つに分けるのと、else ifにするの、どっちが可読性高いんだろう？
      *
-     * ProductControllerのshowLineupメソッドで、
-     * search_product_by_keywordの引数に$keywordを渡しました。
-     * 
-     * なんと、名前を変えても引数の位置(第一引数や第二引数のこと)が同じものが使えます！
-     * ProductController側で関数を呼び出す際は$keyword(実引数)だったものを、定義側では$param(仮引数)として使っています。
-     * 
-     * これを値渡しと言います(READMEに記事のっけておきます！)
-     * 
-     * @param  $param
-     * @return $products
+     * @param [type] $keyword
+     * @param [type] $company_name
+     * @return $data
      */
-    public function searchProductByKeyword($param) {
+    public function searchProductByParams($keyword, $company_name) {
+        // 変数$queryの中身は、Product.phpのquerySelectメソッドでreturnされている$sql
+        // つまり、join文とselect文
+        $query = $this->querySelect();
 
-        //  箱  : $productsという名前の変数(function同様に、中身が分かるものがよい)
-        // 中身 : クエリビルダでproductsテーブル内のデータを取得します
-        $products = DB::table('products')
+        // もし$keywordが空っぽでなければ = キーワードを入力して検索ボタン押したら
+        if (!empty($keyword)) {
+            // select文の続き
+            // where文で絞り込みます(入力されたキーワード($keyword)の文字列を含む、product_name)
+            $query->where('products.product_name', 'LIKE', '%'.$keyword.'%');
+        }
+        // もし$company_infoが空っぽでなければ = メーカー名を選んで検索ボタンを押したら
+        if (!empty($company_name)) {
+            // select文の続き
+            // where文で絞り込みます(選択されたメーカー名($company_name)の、company_id)
+            $query->where('products.company_id', $company_name);
+        }
+        // もし$keywordが空っぽでないかつ、$company_nameも空っぽでない場合
+        // つまり、キーワード入力とメーカー名選択の両方を行って検索ボタンを押したら
+        if (!empty($keyword) && !empty($company_name)) {
+            // select文の続き
+            // where文で何を絞り込んでいるかは...もう分かるな？
+            $query->where('products.product_name', 'LIKE', '%'.$keyword.'%')
+                ->where('products.company_id', $company_name);
+        }
 
-            // productsテーブルのcompany_idとcompaniesテーブルのidで、joinを使ってリレーションを組みます
-            ->join('companies', 'products.company_id', '=', 'companies.id')
-
-            // select文で欲しい情報を選択します
-            // 'テーブル名.カラム名'
-            ->select(
-                'products.id',
-                'products.image',
-                'products.product_name',
-                'products.price',
-                'products.stock',
-                'products.comment',
-                'companies.company_name',
-            )
-
-            // product_nameと検索欄に入力された文字が部分的に一致しているものを、productsテーブルから取得します
-            ->where('products.product_name', 'LIKE', '%'.$param.'%')
-
-            // orderByを使って、productテーブルの'id'カラムの昇順で並び替えます
-            ->orderBy('products.id', 'asc')
-
-            // １ページ最大5件になるようにページネーション機能を使います
-            // '/resources/views/product/lineup.blade.php'にもページネーションに関する記述をお忘れなく！
+        // $dataという変数(箱)に、$query(where文の続き)を入れてあげます
+        // orderByでproductsテーブルのidカラム降順にして
+        $data = $query->orderBy('products.id', 'desc')
+            // １ページ最大5件表示になるように、ページネーションします
             ->paginate(5);
 
         // オブジェクトとして扱えるようにします
-        // つまりどういうことかと言いますと、DB::table('products')~paginate(5);までを
-        // 最初に作った$productsという箱で持ち運びできるようにしようってわけですわ
-        return $products;
-    }
-
-
-    /**
-     * 選択されたメーカー名に紐づくcompaniesテーブルのidで商品を検索します
-     *
-     * ProductControllerのshowLineupメソッドで、
-     * search_product_by_company_nameの引数に$selected_nameを渡しました。
-     * 
-     * なんと、名前を変えても引数の位置(第一引数や第二引数のこと)が同じものが使えます！
-     * ProductController側で関数を呼び出す際は$selected_name(実引数)だったものを、定義側では$param(仮引数)として使っています。
-     * 
-     * これを値渡しと言います(READMEに記事のっけておきます！)
-     * 
-     * @param $param
-     * @return $products
-     */
-    public function searchProductByCompanyName($param) {
-
-        //  箱  : $productsという名前の変数(function同様に、中身が分かるものがよい)
-        // 中身 : クエリビルダでcompaniesテーブル内のデータを取得します
-        $products = DB::table('products')
-
-            // companiesテーブルのidとproductsテーブルのcompany_idで、joinを使ってリレーションを組みます
-            ->join('companies', 'products.company_id', '=', 'companies.id')
-
-            // select文で欲しい情報を選択します
-            // 'テーブル名.カラム名'
-            ->select(
-                'products.id',
-                'products.image',
-                'products.product_name',
-                'products.price',
-                'products.stock',
-                'products.comment',
-                'companies.company_name',
-            )
-
-            // 選択されたメーカ名に紐づくcompany_idと一致しているものを、productsテーブルから取得します
-            ->where('products.company_id', $param)
-
-            // orderByを使って、productテーブルの'id'カラムの昇順で並び替えます
-            ->orderBy('products.id', 'asc')
-
-            // １ページ最大5件になるようにページネーション機能を使います
-            // '/resources/views/product/lineup.blade.php'にもページネーションに関する記述をお忘れなく！
-            ->paginate(5);
-
-        // オブジェクトとして扱えるようにします
-        // つまりどういうことかと言いますと、DB::table('products')~paginate(5);までを
-        // 最初に作った$productsという箱で持ち運びできるようにしようってわけですわ
-        return $products;
-    }
-
-    
-    // キーワード×メーカ名検索
-    // TODO:とりあえず実装だけ。名前カッコよくしたい
-    public function searchProductByCrossParams($keyword, $company_info) {
-        $data = DB::table('products')
-            ->join('companies', 'products.company_id', '=', 'companies.id')
-            ->select(
-                'products.id',
-                'products.image',
-                'products.product_name',
-                'products.price',
-                'products.stock',
-                'products.comment',
-                'companies.company_name',
-            )
-            ->where('products.product_name', 'LIKE', '%'.$keyword.'%')
-            ->where('products.company_id', $company_info)
-            ->orderBy('products.id', 'desc')
-            ->paginate(5);
-
+        // searchProductByParamsが呼び出すと、$dataがもらえるよ
         return $data;
     }
 
-    
+
     /**
      * 商品情報の詳細データ
      *
@@ -223,6 +161,7 @@ class Product extends Model
     public function productDetail($id) {
         //  箱  : $productsという名前の変数(function同様に、中身が分かるものがよい)
         // 中身 : クエリビルダでproductsテーブル内のデータを取得します
+        // select文でとってくるものが違うので、$this->querySelect()は使わない方向で！
         $product = DB::table('products')
 
             // productsテーブルのcompany_idとcompaniesテーブルのidでリレーションを組みます
