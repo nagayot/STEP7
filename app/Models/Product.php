@@ -47,17 +47,17 @@ class Product extends Model
     /**
      * join文でproductsテーブルとcompaniesテーブルを合体して、
      * select文で欲しいカラムを絞り込むクエリ部分
-     * Product.php内では、$this->querySelect()で呼び出すことができます。
+     * Product.php内では、$this->joinAndSelect()で呼び出すことができます。
      * 
      * 呼び出している部分すべてでこの記述をしていると、例えばproductsテーブルのimageカラム無くしますとなった場合
-     * 書いた分だけ修正する必要がありますが、querySelectに書き出してそれを呼び出す今の形にすれば
+     * 書いた分だけ修正する必要がありますが、joinAndSelectに書き出してそれを呼び出す今の形にすれば
      * このメソッド内のsql文だけ変更すればいいだけなので、超楽です！
      * 
      * ここの説明意味わからん場合、理解できるまで説明するので、連絡ください！
      *
      * @return $sql
      */
-    public function querySelect() {
+    public function joinAndSelect() {
         // productsテーブルに対して
         $sql = DB::table('products')
             // companiesテーブルをくっつけます。
@@ -87,7 +87,7 @@ class Product extends Model
         //  箱  : $productsという名前の変数(function同様に、中身が分かるものがよい)
         // 中身 : クエリビルダでproductsテーブル内のデータを取得します
         // $thisでモデル(Product.php)のクラスを指定して、その中にあるselectQueryメソッドを呼び出します
-        $products = $this->querySelect()
+        $products = $this->joinAndSelect()
 
             // orderByを使って、productsテーブルのselect文で選んだデータを、idの降順で並び替えます
             ->orderBy('products.id', 'desc')
@@ -115,9 +115,9 @@ class Product extends Model
      * @return $data
      */
     public function searchProductByParams($keyword, $company_name) {
-        // 変数$queryの中身は、Product.phpのquerySelectメソッドでreturnされている$sql
+        // 変数$queryの中身は、Product.phpのjoinAndSelectメソッドでreturnされている$sql
         // つまり、join文とselect文
-        $query = $this->querySelect();
+        $query = $this->joinAndSelect();
 
         // もし$keywordが空っぽでなければ = キーワードを入力して検索ボタン押したら
         if (!empty($keyword)) {
@@ -161,7 +161,7 @@ class Product extends Model
     public function productDetail($id) {
         //  箱  : $productsという名前の変数(function同様に、中身が分かるものがよい)
         // 中身 : クエリビルダでproductsテーブル内のデータを取得します
-        // select文でとってくるものが違うので、$this->querySelect()は使わない方向で！
+        // select文でとってくるものが違うので、$this->joinAndSelect()は使わない方向で！
         $product = DB::table('products')
 
             // productsテーブルのcompany_idとcompaniesテーブルのidでリレーションを組みます
