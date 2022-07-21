@@ -47,7 +47,7 @@ class ProductController extends Controller
      * 2回に分けて書くのではなく、渡すデータ部分のみを切り取り、このメソッドを呼び出します。
      *
      * @param ProductRequest $request
-     * @return $data
+     * @return $result
      */
     public function dataToDataBase(ProductRequest $request) {
 
@@ -69,21 +69,21 @@ class ProductController extends Controller
             $image->storeAs('', $image_path, 'public');
         }
 
-        // 箱  : $dataという名前の変数(function同様に、中身が分かるものがよい)
+        // 箱  : $resultという名前の変数(function同様に、中身が分かるものがよい)
         // 中身: 空の配列
         // 結果取得用で空の配列を作っておき、欲しいデータを突込んでいきます。
-        $data = [];
-        $data['id'] = $request->input('id');
-        $data['company_id'] = $request->input('company_id');
-        $data['product_name'] = $request->input('product_name');
-        $data['price'] = $request->input('price');
-        $data['stock'] = $request->input('stock');
-        $data['comment'] = $request->input('comment');
-        $data['image'] = $image;
+        $result = [];
+        $result['id'] = $request->input('id');
+        $result['company_id'] = $request->input('company_id');
+        $result['product_name'] = $request->input('product_name');
+        $result['price'] = $request->input('price');
+        $result['stock'] = $request->input('stock');
+        $result['comment'] = $request->input('comment');
+        $result['image'] = $image;
 
         // オブジェクトとして扱えるようにします
-        // dataToDataBaseが呼ばれたら、$dataを渡します！
-        return $data;
+        // dataToDataBaseが呼ばれたら、$resultを渡します！
+        return $result;
     }
 
 

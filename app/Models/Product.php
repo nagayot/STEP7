@@ -112,7 +112,7 @@ class Product extends Model
      *
      * @param [type] $keyword
      * @param [type] $company_name
-     * @return $data
+     * @return $result
      */
     public function searchProductByParams($keyword, $company_name) {
         // 変数$queryの中身は、Product.phpのjoinAndSelectメソッドでreturnされている$sql
@@ -140,15 +140,15 @@ class Product extends Model
                 ->where('products.company_id', $company_name);
         }
 
-        // $dataという変数(箱)に、$query(where文の続き)を入れてあげます
+        // $resultという変数(箱)に、$query(where文の続き)を入れてあげます
         // orderByでproductsテーブルのidカラム降順にして
-        $data = $query->orderBy('products.id', 'desc')
+        $result = $query->orderBy('products.id', 'desc')
             // １ページ最大5件表示になるように、ページネーションします
             ->paginate(5);
 
         // オブジェクトとして扱えるようにします
-        // searchProductByParamsが呼び出すと、$dataがもらえるよ
-        return $data;
+        // searchProductByParamsが呼び出すと、$resultがもらえるよ
+        return $result;
     }
 
 
