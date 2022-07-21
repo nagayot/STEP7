@@ -76,23 +76,12 @@ class ProductController extends Controller
             // 中身： Company.phpのcompanyInfoにアクセス
             $company_data = $this->company->companyInfo();
 
-            // キーワード検索された場合
-            if (!empty($keyword)) {
-                // 箱  ： $product_listという名前の変数(function同様に、中身が分かるものがよい)
-                // 中身： Product.phpのsearchProductByKeywordにアクセス
-                $product_list = $this->product->searchProductByKeyword($keyword);
-            }
-
-            // プルダウンメニュー(メーカー名)での検索が行われた場合
-            if (!empty($selected_name)) {
-                // 箱  ： $product_listという名前の変数(function同様に、中身が分かるものがよい)
-                // 中身： Product.phpのsearchProductByCompanyNameにアクセス
-                $product_list = $this->product->searchProductByCompanyName($selected_name);
-            }
-
-            // キーワード×メーカー名検索
-            if (!empty($keyword) && !empty($selected_name)) {
-                $product_list = $this->product->searchProductByCrossParams($keyword, $selected_name);
+            // || と && についてはググりましょう！
+            // キーワード入力がある場合か、セレクトボックスでメーカー名が選択されている場合か、両方の値がある場合
+            if ( (!empty($keyword)) || (!empty($selected_name)) || (!empty($keyword) && !empty($selected_name)) ) {
+                // 箱  ： $productListという名前の変数(function同様に、中身が分かるものがよい)
+                // 中身： Product.phpのsearchProductByParamsにアクセス
+                $product_list = $this->product->searchProductByParams($keyword, $selected_name);
             }
 
         } catch (\Throwable $e) {
