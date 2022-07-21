@@ -69,6 +69,9 @@ class ProductController extends Controller
             $image->storeAs('', $image_path, 'public');
         }
 
+        // 箱  : $dataという名前の変数(function同様に、中身が分かるものがよい)
+        // 中身: 空の配列
+        // 結果取得用で空の配列を作っておき、欲しいデータを突込んでいきます。
         $data = [];
         $data['id'] = $request->input('id');
         $data['company_id'] = $request->input('company_id');
@@ -78,6 +81,8 @@ class ProductController extends Controller
         $data['comment'] = $request->input('comment');
         $data['image'] = $image;
 
+        // オブジェクトとして扱えるようにします
+        // dataToDataBaseが呼ばれたら、$dataを渡します！
         return $data;
     }
 
