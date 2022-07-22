@@ -86,7 +86,7 @@ class Product extends Model
     public function productList() {
         //  箱  : $productsという名前の変数(function同様に、中身が分かるものがよい)
         // 中身 : クエリビルダでproductsテーブル内のデータを取得します
-        // $thisでモデル(Product.php)のクラスを指定して、その中にあるselectQueryメソッドを呼び出します
+        // $thisでモデル(Product.php)のクラスを指定して、その中にあるjoinAndSelectメソッドを呼び出します
         $products = $this->joinAndSelect()
 
             // orderByを使って、productsテーブルのselect文で選んだデータを、idの降順で並び替えます
