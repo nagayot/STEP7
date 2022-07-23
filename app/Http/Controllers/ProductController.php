@@ -149,7 +149,7 @@ class ProductController extends Controller
             'keyword'      => $keyword,
         ];
         // $dataで渡すものをまとめなかった場合↓
-        // return view('product.lineup', compact('product_list', 'company_data', 'keyword', 'request'));
+        // return view('product.lineup', compact('product_list', 'company_data', 'keyword'));
 
         // '/resources/views/product/lineup.blade.php'に渡したい変数(showLineupで定義したもの)を、compact()関数を用いて渡す。
         // このとき変数に$は付けない
