@@ -28,10 +28,6 @@
                                     id="company_id"
                                     name="company_id"
                                     value="{{ $company_info->id }}"
-                                    {{-- TODO:挙動おかしいけど、メーカー名選択後にキーワード入力して検索できるように --}}
-                                    @if ( !empty($data['request']->company_id) || (old('company_id') == $company_info->id))
-                                        selected
-                                    @endif
                                 >{{ $company_info->company_name }}</option>
                             @endforeach
                         </select>

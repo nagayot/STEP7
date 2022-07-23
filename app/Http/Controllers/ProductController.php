@@ -147,7 +147,6 @@ class ProductController extends Controller
             'product_list' => $product_list,
             'company_data' => $company_data,
             'keyword'      => $keyword,
-            'request'      => $request,
         ];
         // $dataで渡すものをまとめなかった場合↓
         // return view('product.lineup', compact('product_list', 'company_data', 'keyword', 'request'));
