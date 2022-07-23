@@ -125,7 +125,7 @@ class Product extends Model
             // where文で絞り込みます(入力されたキーワード($keyword)の文字列を含む、product_name)
             $query->where('products.product_name', 'LIKE', '%'.$keyword.'%');
         }
-        // もし$company_infoが空っぽでなければ = メーカー名を選んで検索ボタンを押したら
+        // もし$company_nameが空っぽでなければ = メーカー名を選んで検索ボタンを押したら
         if (!empty($company_name)) {
             // select文の続き
             // where文で絞り込みます(選択されたメーカー名($company_name)の、company_id)
